@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Lesson, Instructor, Learner, Question, Choice
+from .models import Course, Lesson, Instructor, Learner, Question, Choice, Submission
 
 class QuestionInline(admin.StackedInline):
     model = Question
@@ -23,11 +23,15 @@ class LessonAdmin(admin.ModelAdmin):
     list_display = ['title']
 
 class QuestionAdmin(admin.ModelAdmin):
-    inlines = [ChoiceInline]
+    list_display = ['question_text', 'grade']
 
+class ChoiceAdmin(admin.ModelAdmin):
+    list_display = ['choice_text', 'is_correct']
+
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice, ChoiceAdmin)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Lesson, LessonAdmin)
-admin.site.register(Question, QuestionAdmin)
-admin.site.register(Choice)
 admin.site.register(Instructor)
 admin.site.register(Learner)
+admin.site.register(Submission)
